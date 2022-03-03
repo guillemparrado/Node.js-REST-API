@@ -8,7 +8,7 @@ const Player = require('../models/player');
 
 /* CREA UN JUGADOR */
 
-router.post('/', jsonParser, async (req, res) => {
+router.post('/', jsonParser, (req, res) => {
 
     // Bad request si falta field username
     if(!('username' in req.body)){
@@ -48,7 +48,7 @@ router.post('/', jsonParser, async (req, res) => {
 
 
 /* MODIFICA EL NOM DEL JUGADOR */
-router.put('/', jsonParser, async (req, res) => {
+router.put('/', jsonParser, (req, res) => {
 
     // Comprova que el JSON és correcte
     if(!('username' in req.body) || 
@@ -86,6 +86,23 @@ router.put('/', jsonParser, async (req, res) => {
         console.log(e);
     })
 
+})
+
+router.get('/', (req, res) => {
+    Player.findAll({attributes: ['name', 'winsPercent']}).then(results => {
+        console.log(results);
+        out = []
+        
+        for (let result of results) {
+            out.push({
+                username: result.dataValues.name,
+                winsPercent: result.dataValues.winsPercent,
+            })
+        }
+        console.log(results);
+        res.send(out)
+        
+    })
 })
 
 
