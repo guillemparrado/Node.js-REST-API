@@ -1,8 +1,8 @@
 const express = require('express');
-const db = require('./models/utils/sequelizeSingleton')
 playersRoutes = require('./routes/players')
 gamesRoutes = require('./routes/games')
 rankingsRoutes = require('./routes/rankings')
+require('./models/utils/sequelizeInitialization')
 
 
 const app = express();
