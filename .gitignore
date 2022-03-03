@@ -1,0 +1,5 @@
+# Ide folder
+**/.vscode
+
+# npm installs
+**/node_modules
