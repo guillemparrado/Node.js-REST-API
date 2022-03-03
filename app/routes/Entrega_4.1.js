@@ -50,7 +50,7 @@ router.post('/upload', upload.single('image'), (req, res) => {
 })
 
 
-// Nivell 2 Exercici 1
+// Nivell 2 Exercici 1, Nivell 3 Exercici 1
 
 // Middleware específic
 
@@ -62,9 +62,23 @@ function addNoCacheHeader(req, res, next){
 // Li poso tot el middleware a la ruta en comptes de posar-ne a tota l'app (sempre es pot moure algun a app.use més endavant si totes les rutes el necessiten)
 
 router.post('/time', [jsonParser, addNoCacheHeader, cors], (req, res) => {
+
+    // Comprova autenticació
+    if(req.headers.authorization === undefined ||
+        req.headers.authorization.substring(0, 5) != 'Basic'){
+            console.log('Unauthorized attempt');
+            res.sendStatus(401)
+            return
+        }
+
+    // En cas que n'hi hagi fes log
+    user_passwd = Buffer.from(req.headers.authorization.substring(6), 'base64').toString()
+    console.log(`BasicAuth From Header: ${user_passwd}`);
     
     // Log del nom d'usuari rebut
-    console.log(req.body.username ? 'Username: '+ req.body.username : 'Username: undefined');
+    let msg = 'Username From JSON body: '
+    msg += req.body.username ? req.body.username : 'undefined'
+    console.log(msg);
 
     // Envia datetime actual
     res.send({

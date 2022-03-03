@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "56b334ac-635e-433e-bec6-6dcb066d5ba0",
-		"name": "Sprint4_GuillemParrado",
+		"name": "GuillemParrado_Entrega4.1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -214,6 +214,90 @@
 						{
 							"name": "/time",
 							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"Guillem Parrado\"\r\n}"
+								},
+								"url": {
+									"raw": "localhost:81/time",
+									"host": [
+										"localhost"
+									],
+									"port": "81",
+									"path": [
+										"time"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Nivell 3",
+			"item": [
+				{
+					"name": "Exercici 1",
+					"item": [
+						{
+							"name": "/time authorized",
+							"request": {
+								"auth": {
+									"type": "basic",
+									"basic": [
+										{
+											"key": "username",
+											"value": "guillem",
+											"type": "string"
+										},
+										{
+											"key": "password",
+											"value": "123456",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"Guillem Parrado\"\r\n}"
+								},
+								"url": {
+									"raw": "localhost:81/time",
+									"host": [
+										"localhost"
+									],
+									"port": "81",
+									"path": [
+										"time"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/time unauthorized",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
 								"method": "POST",
 								"header": [
 									{
