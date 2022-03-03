@@ -48,3 +48,12 @@ Follow the steps below:
 * [Node Developers Guide](https://nodejs.dev/learn)
 * **.gitignore file** configuration. See [Official Docs](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files).
 * **Git branches**. See [Official Docs](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
+
+
+<hr>
+
+# Sprint4_GuillemParrado
+
+
+Per importar col·lecció Postman:
+1. Obrir Postman -> Collections -> Import -> seleccionar `Sprint4_GuillemParrado.postman_collection.json`
