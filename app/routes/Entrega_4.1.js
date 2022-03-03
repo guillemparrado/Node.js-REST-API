@@ -4,13 +4,16 @@ const UPLOAD_PATH = 'server_uploads/'
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const bodyParser = require('body-parser')
+const jsonParser = bodyParser.json()
 const upload = multer({ dest: UPLOAD_PATH})
+const cors = require('cors')()
 const fs = require('fs');
 const db = require('../utils/jsonDB');
 db.connect(UPLOAD_PATH + 'files_description.json')
 
 
-// Exercici 1.1
+// Nivell 1 Exercici 1
 router.get('/user', (req, res) => {
     res.send({
         nom: 'Guillem Parrado',
@@ -20,7 +23,7 @@ router.get('/user', (req, res) => {
  })
 
 
- // Exercici 1.2
+ // Nivell 1 Exercici 2
 router.post('/upload', upload.single('image'), (req, res) => {
 
     // Retorna codi: 'No Content' si no s'ha rebut file
@@ -44,6 +47,29 @@ router.post('/upload', upload.single('image'), (req, res) => {
     // En cas contrari, elimina file rebut i retorna codi: 'Unsuported Media Type'
     fs.unlink(req.file.path, err => {if(err) console.log(err)})
     res.sendStatus(415)
+})
+
+
+// Nivell 2 Exercici 1
+
+// Middleware específic
+
+function addNoCacheHeader(req, res, next){
+    res.set('Cache-control', 'no-cache')
+    next()
+}
+
+// Li poso tot el middleware a la ruta en comptes de posar-ne a tota l'app (sempre es pot moure algun a app.use més endavant si totes les rutes el necessiten)
+
+router.post('/time', [jsonParser, addNoCacheHeader, cors], (req, res) => {
+    
+    // Log del nom d'usuari rebut
+    console.log(req.body.username ? 'Username: '+ req.body.username : 'Username: undefined');
+
+    // Envia datetime actual
+    res.send({
+        currentDateTime: Date()
+    })
 })
 
 

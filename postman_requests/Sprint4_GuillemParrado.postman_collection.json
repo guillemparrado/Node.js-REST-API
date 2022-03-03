@@ -204,6 +204,44 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Nivell 2",
+			"item": [
+				{
+					"name": "Exercici 1",
+					"item": [
+						{
+							"name": "/time",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"Guillem Parrado\"\r\n}"
+								},
+								"url": {
+									"raw": "localhost:81/time",
+									"host": [
+										"localhost"
+									],
+									"port": "81",
+									"path": [
+										"time"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
 		}
 	]
 }

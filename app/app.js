@@ -1,7 +1,6 @@
 const express = require('express');
 entrega_41 = require('./routes/Entrega_4.1')
 
-
 const app = express();
 app.use('/', entrega_41)
 
