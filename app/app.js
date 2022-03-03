@@ -1,15 +1,11 @@
 const express = require('express');
+entrega_41 = require('./routes/Entrega_4.1')
+
+
 const app = express();
+app.use('/', entrega_41)
 
-app.get('/user', function (req, res) {
-   res.send({
-       nom: 'Guillem Parrado',
-       edat: 34,
-       url: req.protocol + '://' + req.get('host') + req.originalUrl
-   });
-})
-
-const server = app.listen(80, () => {
+const server = app.listen(81, () => {
    let host = server.address().address
    let port = server.address().port
 
