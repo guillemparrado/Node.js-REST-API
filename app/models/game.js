@@ -1,22 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('./utils/sequelizeSingleton')
+const sequelize = require('./utils/mysqlConnection')
 
-class User extends Model {}
-User.init({
-  username: DataTypes.STRING,
-  birthday: DataTypes.DATE
-}, { sequelize, modelName: 'user' });
+class Game extends Model {}
+Game.init({
+  dice1: DataTypes.TINYINT,
+  dice2: DataTypes.TINYINT,
+  won: DataTypes.BOOLEAN
+}, { sequelize, modelName: 'game' });
 
-(async () => {
-  await sequelize.sync();
-  try{
-    const jane = await User.create({
-        username: 'janedoe',
-        birthday: new Date(1980, 6, 20)
-      });
-      console.log(jane.toJSON());
-  } catch(e){
-      console.log(e);
-  }
-  
-})();
+module.exports = Game

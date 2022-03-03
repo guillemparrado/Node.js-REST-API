@@ -10,9 +10,6 @@ app.use('/players', playersRoutes)
 //app.use('/players', gamesRoutes)
 //app.use('/players', rankingsRoutes)
 
-// Comprovo que demo funciona
-require('./models/game')
-
 const server = app.listen(80, () => {
    let host = server.address().address
    let port = server.address().port
