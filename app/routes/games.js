@@ -7,9 +7,9 @@ const Player = require('../models/Player');
 const Game = require('../models/Game')
 
 
-/* UN JUGADOR ESPECÍFIC REALITZA UNA TIRADA */
-/*
-Tinc dubtes en aquesta part, sembla que el disseny òptim seria un get i que fos el back en node qui realitzés la tirada. Entenc que tal com està és pq no hi hagi method URIs i que només sigui una API d'iteracció amb una BBDD. En aquest sentit, obligo a rebre tirada de daus vàlida i passo la responsabilitat de la tirada al caller de l'api.
+/* 
+UN JUGADOR ESPECÍFIC REALITZA UNA TIRADA
+Tinc dubtes en aquesta part, sembla que el disseny òptim seria un get i que fos el back en node qui realitzés la tirada. Entenc que tal com està és pq no hi hagi method URIs i que només sigui una API d'iteracció amb una BBDD. Assumeixo que és així: obligo a rebre tirada de daus vàlida i passo la responsabilitat de la tirada al caller de l'api.
 */
 
 router.post('/:id/games', jsonParser, (req, res) => {
@@ -49,6 +49,29 @@ router.post('/:id/games', jsonParser, (req, res) => {
     }).catch(e => console.log(e))
 })
 
+/*
+ELIMINA LES TIRADES DEL JUGADOR
+Faig el request idempodent: ni faig check ni retorno error quan player no existeixi 
+*/
+router.delete('/:id/games', jsonParser, (req, res) => {
+    Game.destroy({
+        where: {playerId: req.params.id}
+      }).then(result => {
+          console.log(result);
+          res.sendStatus(200)
+      }).catch(e => console.log(e))
+})
+
+/*
+RETORNA EL LLISTAT DE JUGADES PER UN JUGADOR
+*/
+router.get('/:id/games', jsonParser, (req, res) => {
+    Game.findAll({
+        where: {playerId: req.params.id}
+    }).then(result => {
+        res.send(result)
+    }).catch(e => console.log(e))
+})
 
 const validDiceResult = value => Number.isInteger(value) && value >=1 && value <=6
 
