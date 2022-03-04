@@ -2,12 +2,12 @@ const express = require('express');
 playersRoutes = require('./routes/players')
 gamesRoutes = require('./routes/games')
 rankingsRoutes = require('./routes/rankings')
-require('./models/utils/sequelizeInitialization')
+require('./models/utils/wireSequelize')
 
 
 const app = express();
 app.use('/players', playersRoutes)
-//app.use('/players', gamesRoutes)
+//app.use('/players/:id/games', gamesRoutes)
 //app.use('/players', rankingsRoutes)
 
 const server = app.listen(80, () => {

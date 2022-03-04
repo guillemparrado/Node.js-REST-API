@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "5b1b8670-a54b-4c19-ba00-7f00e5d59671",
+		"name": "GuillemParrado_Entrega4.2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST /players",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Guillem Parrado\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost/players",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"players"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /players",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"newname\": \"Guillem Parradosa\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost/players",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"players"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /players",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost/players",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"players"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

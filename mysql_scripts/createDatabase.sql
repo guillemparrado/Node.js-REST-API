@@ -1,4 +1,6 @@
-DROP database if EXISTS DiceGame;
+-- Cal executar cada cop que es modifiqui l'estructura d'alguna taula a app/models (sinó, mysql té taula preexistent amb estructura diferent i execució d l'app dona error amb nova estructura quan el problema no és de l'app)
+
+DROP database /*if EXISTS*/ DiceGame;
 
 CREATE DATABASE DiceGame CHARACTER
 SET

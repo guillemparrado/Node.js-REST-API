@@ -3,39 +3,40 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
 
-const Player = require('../models/player');
+const Player = require('../models/Player');
 
 
 /* CREA UN JUGADOR */
 
 router.post('/', jsonParser, (req, res) => {
 
-    // Bad request si falta field username
-    if(!('username' in req.body)){
+    // Bad request si falta field name
+    if(!('name' in req.body)){
         res.status(400)
-        res.send('Missing JSON body with a \'username\' field in it')
+        res.send('Missing JSON body with a \'name\' field in it')
         return
     }
 
     // Si nom buit, assigna 'ANÒNIM'
-    if(isEmptyString(req.body.username)){
-        req.body.username = 'ANÒNIM'
+    if(isEmptyString(req.body.name)){
+        req.body.name = 'ANÒNIM'
     }
 
-    // Comprova si username ja existeix
-    Player.findOne({where: {name: req.body.username} })
+    // Comprova si name ja existeix
+    Player.findOne({where: {name: req.body.name} })
     .then(result => {
-        //Bad request si username existeix (excepte si és anònim)
-        if(req.body.username != 'ANÒNIM' && result !== null) {
+        //Bad request si name existeix (excepte si és anònim)
+        if(req.body.name != 'ANÒNIM' && result !== null) {
             res.status(400)
-            res.send('Username already exists')
+            res.send('Player name already exists!')
             return
         }
 
         // Desa player i retorna OK
-        Player.create({name: req.body.username})
+        Player.create({name: req.body.name})
         .then(result => {
-            res.sendStatus(200)
+            res.status(200)
+            res.send(result)
         })
         .catch(e => console.log(e))
         
@@ -48,34 +49,36 @@ router.post('/', jsonParser, (req, res) => {
 
 
 /* MODIFICA EL NOM DEL JUGADOR */
+/* Discussió: cal identificar els jugadors per id perquè, si ho fem per nom i és anònim, no sabrem a quin de tots els que
+hi pugui haver a la base de dades s'està referint */
+
 router.put('/', jsonParser, (req, res) => {
 
     // Comprova que el JSON és correcte
-    if(!('username' in req.body) || 
+    if(!('id' in req.body) || 
     !('newname' in req.body) || 
-    isEmptyString(req.body.username) ||
-    isEmptyString(req.body.newname) ||
-    req.body.username === 'ANÒNIM'){
+    !isValidId(req.body.id) ||
+    isEmptyString(req.body.newname)){
         res.status(400)
-        res.send('The atributes {username, newname} need to be filled in a JSON body + username cannot be \'ANÒNIM\'')
+        res.send('The atributes {id, newname} need to be filled in a JSON body with valid values')
         return
     }
 
-    // Troba username
-    Player.findOne({where: {name: req.body.username} })
+    // Troba id
+    Player.findOne({where: {id: req.body.id} })
     .then(result => {
 
-        //Retorna error si username no existeix
+        //Retorna error si user no existeix
         if(result === null) {
             res.status(404)
-            res.send('Username doesn\'t exist')
+            res.send(`User with id: ${req.body.id} doesn't exist`)
             return
         }
 
         // Canvia nom i retorna
         Player.update(
             {name: req.body.newname},
-            {where: {name: req.body.username}}
+            {where: {id: req.body.id}}
         ).then(result => {
             res.sendStatus(200)
         }).catch(e => { 
@@ -89,23 +92,16 @@ router.put('/', jsonParser, (req, res) => {
 })
 
 router.get('/', (req, res) => {
-    Player.findAll({attributes: ['name', 'winsPercent']}).then(results => {
-        console.log(results);
-        out = []
-        
-        for (let result of results) {
-            out.push({
-                username: result.dataValues.name,
-                winsPercent: result.dataValues.winsPercent,
-            })
-        }
-        console.log(results);
-        res.send(out)
-        
+    Player.findAll().then(results => {
+        res.send(results)
     })
 })
 
 
 const isEmptyString = str => str === undefined || str === null || str.trim() === ''
+const isValidId = value => {
+    intValue = parseInt(value)
+    return typeof intValue == 'number' && intValue != 0
+}
 
- module.exports = router;
+module.exports = router;
