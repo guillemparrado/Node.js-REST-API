@@ -82,6 +82,35 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "POST /players/{id}/games",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Guillem Parrado\"\r\n}"
+				},
+				"url": {
+					"raw": "localhost/players/1/games",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"players",
+						"1",
+						"games"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
