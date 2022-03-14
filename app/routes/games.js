@@ -8,6 +8,7 @@ const Game = require('../models/Game')
 
 const { Op } = require('sequelize')
 
+const { sendError } = require('./utils')
 
 /* 
 UN JUGADOR ESPECÍFIC REALITZA UNA TIRADA
@@ -20,22 +21,22 @@ router.post('/:id/games', jsonParser, (req, res) => {
     if(!('dice1' in req.body) || 
     !('dice2' in req.body)){
         res.status(400)
-        res.send('Error: Needed fields in the JSON body: dice1, dice2.')
+        res.send({error: 'Needed fields in the JSON body: dice1, dice2.'})
         return
     }
 
     if(!validDiceResult(req.body.dice1) || !validDiceResult(req.body.dice2)){
         res.status(400)
-        res.send('Error: Dice values need to be valid integers between 1 and 6')
+        res.send({error: 'Dice values need to be valid integers between 1 and 6'})
         return
     }
 
     // Valida que player existeix
     Player.findOne({where: {id: req.params.id} })
-    .then(result => {
-        if(result === null){
+    .then(player => {
+        if(player === null){
             res.status(400)
-            res.send(`Error: player with id ${req.params.id} doesn't exist`)
+            res.send({error: `Player with id ${req.params.id} doesn't exist`})
             return
         }
         // Crea i desa tirada
@@ -44,13 +45,11 @@ router.post('/:id/games', jsonParser, (req, res) => {
             dice1: req.body.dice1,
             dice2: req.body.dice2,
             won: req.body.dice1 + req.body.dice2 === 7
-        }).then(result => {
-            
+        }).then(game => {
             actualitzaWinsPercentPlayer(req.params.id)
-            
-            res.send(result)
-        }).catch(e => console.log(e))
-    }).catch(e => console.log(e))
+            res.send(game)
+        }).catch(error => sendError(res, error))
+    }).catch(error => sendError(res, error))
 })
 
 function actualitzaWinsPercentPlayer(id) {
@@ -70,9 +69,9 @@ function actualitzaWinsPercentPlayer(id) {
             winsPercent = (won/count*100).toFixed(2) // 2 decimals
             Player.update({winsPercent}, {
                 where: {id}
-            }).catch(e => console.log(e))
-        }).catch(e => console.log(e))
-    }).catch(e => console.log(e))
+            }).catch(error => sendError(res, error))
+        }).catch(error => sendError(res, error))
+    }).catch(error => sendError(res, error))
 }
 
 /*
@@ -83,9 +82,8 @@ router.delete('/:id/games', jsonParser, (req, res) => {
     Game.destroy({
         where: {playerId: req.params.id}
       }).then(result => {
-          console.log(result);
           res.sendStatus(200)
-      }).catch(e => console.log(e))
+      }).catch(error => sendError(res, error))
 })
 
 /*
@@ -94,9 +92,9 @@ RETORNA EL LLISTAT DE JUGADES PER UN JUGADOR
 router.get('/:id/games', jsonParser, (req, res) => {
     Game.findAll({
         where: {playerId: req.params.id}
-    }).then(result => {
-        res.send(result)
-    }).catch(e => console.log(e))
+    }).then(games => {
+        res.send(games)
+    }).catch(error => sendError(res, error))
 })
 
 const validDiceResult = value => Number.isInteger(value) && value >=1 && value <=6
