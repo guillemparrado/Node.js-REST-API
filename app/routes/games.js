@@ -6,6 +6,8 @@ const jsonParser = bodyParser.json()
 const Player = require('../models/Player');
 const Game = require('../models/Game')
 
+const { Op } = require('sequelize')
+
 
 /* 
 UN JUGADOR ESPECÍFIC REALITZA UNA TIRADA
@@ -43,11 +45,35 @@ router.post('/:id/games', jsonParser, (req, res) => {
             dice2: req.body.dice2,
             won: req.body.dice1 + req.body.dice2 === 7
         }).then(result => {
-            res.status(200)
+            
+            actualitzaWinsPercentPlayer(req.params.id)
+            
             res.send(result)
         }).catch(e => console.log(e))
     }).catch(e => console.log(e))
 })
+
+function actualitzaWinsPercentPlayer(id) {
+    Game.count({
+        where: {
+          playerId: id
+        }
+    }).then(count => {
+        Game.count({
+            where: {
+                [Op.and]: [
+                    {playerId: id},
+                    {won: true}
+                ]
+            }
+        }).then(won => {
+            winsPercent = (won/count*100).toFixed(2) // 2 decimals
+            Player.update({winsPercent}, {
+                where: {id}
+            }).catch(e => console.log(e))
+        }).catch(e => console.log(e))
+    }).catch(e => console.log(e))
+}
 
 /*
 ELIMINA LES TIRADES DEL JUGADOR
