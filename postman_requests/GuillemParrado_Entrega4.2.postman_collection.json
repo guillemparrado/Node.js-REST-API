@@ -96,7 +96,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Guillem Parrado\"\r\n}"
+					"raw": "{\r\n    \"dice1\": 3,\r\n    \"dice2\": 2\r\n}"
 				},
 				"url": {
 					"raw": "localhost/players/1/games",
@@ -107,6 +107,130 @@
 						"players",
 						"1",
 						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /players/{id}/games",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost/players/3/games",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"players",
+						"3",
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /players/{id}/games",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost/players/1/games",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"players",
+						"1",
+						"games"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /players/ranking",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost/players/ranking",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"players",
+						"ranking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /players/ranking/loser",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost/players/ranking/loser",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"players",
+						"ranking",
+						"loser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /players/ranking/winner",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost/players/ranking/winner",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"players",
+						"ranking",
+						"winner"
 					]
 				}
 			},
