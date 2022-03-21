@@ -152,7 +152,7 @@
 										{
 											"key": "image",
 											"type": "file",
-											"src": "/C:/Users/guillem/Documents/Workspaces/sprint4/postman_requests/nodejs"
+											"src": "/C:/Users/guillem/code/bootcamp/nodeInitialDemo/postman_requests/nodejs"
 										}
 									]
 								},
@@ -179,7 +179,7 @@
 										{
 											"key": "image",
 											"type": "file",
-											"src": "/C:/Users/guillem/Documents/Workspaces/sprint4/postman_requests/nodejs.txt"
+											"src": "/C:/Users/guillem/code/bootcamp/nodeInitialDemo/postman_requests/nodejs.txt"
 										}
 									]
 								},

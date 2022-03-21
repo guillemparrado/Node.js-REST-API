@@ -17,7 +17,7 @@ router.post('/', upload.single('image'), (req, res) => {
         console.log('No content');
         res.status(400)
         res.send({
-            error: "Either no content was received or it had the wrong extension"
+            error: "No file was received"
         })
         return
     }
@@ -38,7 +38,10 @@ router.post('/', upload.single('image'), (req, res) => {
     
     // En cas contrari, elimina file rebut i retorna codi: 'Unsuported Media Type'
     fs.unlink(req.file.path, err => {if(err) console.log(err)})
-    res.sendStatus(415)
+    res.status(415)
+    res.send({
+        error: 'The image file has the wrong extension'
+    })
 })
 
 module.exports = router
