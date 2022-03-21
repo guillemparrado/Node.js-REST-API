@@ -325,7 +325,7 @@
 			]
 		},
 		{
-			"name": "Extra",
+			"name": "Extra: Default Routes",
 			"item": [
 				{
 					"name": "GET /badRoute",
@@ -339,6 +339,23 @@
 							],
 							"path": [
 								"badRoute"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /anotherBadRoute",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost/anotherBadRoute",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"anotherBadRoute"
 							]
 						}
 					},
