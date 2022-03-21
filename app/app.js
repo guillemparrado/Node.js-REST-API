@@ -1,8 +1,17 @@
 const express = require('express');
-entrega_41 = require('./routes/Entrega_4.1')
+
+
+const user = require('./routes/user')
+const upload = require('./routes/upload')
+const time = require('./routes/time')
+const defaultRoutes = require('./routes/defaultRoutes')
+
 
 const app = express();
-app.use('/', entrega_41)
+app.use('/user', user)
+app.use('/upload', upload)
+app.use('/time', time)
+app.use('/', defaultRoutes)
 
 const server = app.listen(80, () => {
    let host = server.address().address
