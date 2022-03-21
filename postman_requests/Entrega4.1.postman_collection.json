@@ -317,6 +317,28 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Extra",
+			"item": [
+				{
+					"name": "GET /badRoute",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost/badRoute",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"badRoute"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

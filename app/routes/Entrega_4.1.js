@@ -26,9 +26,13 @@ router.get('/user', (req, res) => {
  // Nivell 1 Exercici 2
 router.post('/upload', upload.single('image'), (req, res) => {
 
-    // Retorna codi: 'No Content' si no s'ha rebut file
+    // Retorna codi: 'Bad Request' si no s'ha rebut file
     if(req.file === undefined){
-        res.sendStatus(204)
+        console.log('No content');
+        res.status(400)
+        res.send({
+            error: "Either no content was received or it had the wrong extension"
+        })
         return
     }
 
@@ -40,7 +44,9 @@ router.post('/upload', upload.single('image'), (req, res) => {
 
     if(nameSplit.length >= 2 && (ext == 'jpg' || ext == 'png' || ext == 'gif')){
         db.addFileData(req.file)
-        res.sendStatus(200)
+        res.send({
+            message: 'OK'
+        })
         return
     }
     
@@ -67,7 +73,10 @@ router.post('/time', [jsonParser, addNoCacheHeader, cors], (req, res) => {
     if(req.headers.authorization === undefined ||
         req.headers.authorization.substring(0, 5) != 'Basic'){
             console.log('Unauthorized attempt');
-            res.sendStatus(401)
+            res.status(401)
+            res.send({
+                error: 'Unauthorized'
+            })
             return
         }
 
@@ -86,5 +95,18 @@ router.post('/time', [jsonParser, addNoCacheHeader, cors], (req, res) => {
     })
 })
 
+router.get("*", (req, res) => {
+    res.status(404)
+    res.send({
+        error: 'Route not found'
+    });   
+});
+
+router.post("*", (req, res) => {
+    res.status(404)
+    res.send({
+        error: 'Route not found'
+    });   
+});
 
  module.exports = router;
