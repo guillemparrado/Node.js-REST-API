@@ -14,7 +14,7 @@ router.post('/', [jsonParser, addNoCacheHeader, cors], (req, res) => {
     // Comprova autenticació
     if(req.headers.authorization === undefined ||
         req.headers.authorization.substring(0, 5) != 'Basic'){
-            console.log('Unauthorized attempt');
+            // console.log('Unauthorized attempt');
             res.status(401)
             res.send({
                 error: 'Unauthorized'
@@ -24,7 +24,7 @@ router.post('/', [jsonParser, addNoCacheHeader, cors], (req, res) => {
 
     // En cas que n'hi hagi fes log
     user_passwd = Buffer.from(req.headers.authorization.substring(6), 'base64').toString()
-    console.log(`BasicAuth From Header: ${user_passwd}`);
+    // console.log(`BasicAuth From Header: ${user_passwd}`);
     
     // Si no sha rebut nom d'usuari, retorna error
     if(req.body.username == undefined){
@@ -38,7 +38,7 @@ router.post('/', [jsonParser, addNoCacheHeader, cors], (req, res) => {
     // Log del nom d'usuari rebut
     let msg = 'Username From JSON body: '
     msg += req.body.username ? req.body.username : 'undefined'
-    console.log(msg);
+    // console.log(msg);
 
     // Envia datetime actual
     res.send({
