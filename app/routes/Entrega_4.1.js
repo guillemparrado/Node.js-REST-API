@@ -84,6 +84,14 @@ router.post('/time', [jsonParser, addNoCacheHeader, cors], (req, res) => {
     user_passwd = Buffer.from(req.headers.authorization.substring(6), 'base64').toString()
     console.log(`BasicAuth From Header: ${user_passwd}`);
     
+    // Si no sha rebut nom d'usuari, retorna error
+    if(req.body.username == undefined){
+        res.status(400)
+        res.send({
+            error: 'Missing: A JSON with a valid username'
+        })
+    }
+
     // Log del nom d'usuari rebut
     let msg = 'Username From JSON body: '
     msg += req.body.username ? req.body.username : 'undefined'
