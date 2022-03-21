@@ -49,11 +49,10 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:81/upload",
+									"raw": "localhost/upload",
 									"host": [
 										"localhost"
 									],
-									"port": "81",
 									"path": [
 										"upload"
 									]
@@ -77,11 +76,10 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:81/upload",
+									"raw": "localhost/upload",
 									"host": [
 										"localhost"
 									],
-									"port": "81",
 									"path": [
 										"upload"
 									]
@@ -105,11 +103,10 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:81/upload",
+									"raw": "localhost/upload",
 									"host": [
 										"localhost"
 									],
-									"port": "81",
 									"path": [
 										"upload"
 									]
@@ -133,11 +130,10 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:81/upload",
+									"raw": "localhost/upload",
 									"host": [
 										"localhost"
 									],
-									"port": "81",
 									"path": [
 										"upload"
 									]
@@ -161,11 +157,10 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:81/upload",
+									"raw": "localhost/upload",
 									"host": [
 										"localhost"
 									],
-									"port": "81",
 									"path": [
 										"upload"
 									]
@@ -189,11 +184,10 @@
 									]
 								},
 								"url": {
-									"raw": "localhost:81/upload",
+									"raw": "localhost/upload",
 									"host": [
 										"localhost"
 									],
-									"port": "81",
 									"path": [
 										"upload"
 									]
@@ -227,11 +221,10 @@
 									"raw": "{\r\n    \"username\": \"Guillem Parrado\"\r\n}"
 								},
 								"url": {
-									"raw": "localhost:81/time",
+									"raw": "localhost/time",
 									"host": [
 										"localhost"
 									],
-									"port": "81",
 									"path": [
 										"time"
 									]
@@ -280,11 +273,10 @@
 									"raw": "{\r\n    \"username\": \"Guillem Parrado\"\r\n}"
 								},
 								"url": {
-									"raw": "localhost:81/time",
+									"raw": "localhost/time",
 									"host": [
 										"localhost"
 									],
-									"port": "81",
 									"path": [
 										"time"
 									]
@@ -311,11 +303,10 @@
 									"raw": "{\r\n    \"username\": \"Guillem Parrado\"\r\n}"
 								},
 								"url": {
-									"raw": "localhost:81/time",
+									"raw": "localhost/time",
 									"host": [
 										"localhost"
 									],
-									"port": "81",
 									"path": [
 										"time"
 									]
