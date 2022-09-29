@@ -78,7 +78,7 @@ router.get('/:id', jsonParser, async (req, res) => {
         const games = await Game.findAll({
             where: { playerId: req.params.id }
         });
-        res.send(games);
+        res.send({ games });
 
     } catch (error) {
         res.status(500).json({ error });
@@ -98,17 +98,12 @@ const calcUserWinsPercent = async playerId => {
 
     const won = await Game.count({
         where: {
-            [Op.and]: [
-                { playerId },
-                { won: true }
-            ]
+            [Op.and]: [{ playerId }, { won: true }]
         }
     })
 
     // Resolució bug divisió per zero
-    return count === 0 ?
-        0 :
-        (won / count * 100).toFixed(2) // 2 decimals
+    return count === 0 ? 0 : (won / count * 100).toFixed(2) // 2 decimals
 }
 
 module.exports = router
