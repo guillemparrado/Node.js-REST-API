@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "5b1b8670-a54b-4c19-ba00-7f00e5d59671",
+		"_postman_id": "64e30725-7fc0-4f65-9ad8-765cc1b107c9",
 		"name": "GuillemParrado_Entrega4.2",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23569225"
 	},
 	"item": [
 		{
@@ -84,7 +85,7 @@
 			"response": []
 		},
 		{
-			"name": "POST /players/{id}/games",
+			"name": "POST /games/:id",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -99,21 +100,20 @@
 					"raw": "{\r\n    \"dice1\": 3,\r\n    \"dice2\": 2\r\n}"
 				},
 				"url": {
-					"raw": "localhost/players/1/games",
+					"raw": "localhost/games/3",
 					"host": [
 						"localhost"
 					],
 					"path": [
-						"players",
-						"1",
-						"games"
+						"games",
+						"3"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "DELETE /players/{id}/games",
+			"name": "DELETE /games/:id",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -124,21 +124,20 @@
 					}
 				],
 				"url": {
-					"raw": "localhost/players/3/games",
+					"raw": "localhost/games/1",
 					"host": [
 						"localhost"
 					],
 					"path": [
-						"players",
-						"3",
-						"games"
+						"games",
+						"1"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GET /players/{id}/games",
+			"name": "GET /games/:id",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -149,21 +148,20 @@
 					}
 				],
 				"url": {
-					"raw": "localhost/players/1/games",
+					"raw": "localhost/games/1",
 					"host": [
 						"localhost"
 					],
 					"path": [
-						"players",
-						"1",
-						"games"
+						"games",
+						"1"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GET /players/ranking",
+			"name": "GET /ranking",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -174,12 +172,11 @@
 					}
 				],
 				"url": {
-					"raw": "localhost/players/ranking",
+					"raw": "localhost/ranking",
 					"host": [
 						"localhost"
 					],
 					"path": [
-						"players",
 						"ranking"
 					]
 				}
@@ -187,7 +184,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /players/ranking/loser",
+			"name": "GET /ranking/loser",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -198,12 +195,11 @@
 					}
 				],
 				"url": {
-					"raw": "localhost/players/ranking/loser",
+					"raw": "localhost/ranking/loser",
 					"host": [
 						"localhost"
 					],
 					"path": [
-						"players",
 						"ranking",
 						"loser"
 					]
@@ -212,7 +208,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /players/ranking/winner",
+			"name": "GET /ranking/winner",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -223,14 +219,47 @@
 					}
 				],
 				"url": {
-					"raw": "localhost/players/ranking/winner",
+					"raw": "localhost/ranking/winner",
 					"host": [
 						"localhost"
 					],
 					"path": [
-						"players",
 						"ranking",
 						"winner"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ruta per defecte",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost/asd312",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"asd312"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ruta per defecte",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost/asd312",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"asd312"
 					]
 				}
 			},

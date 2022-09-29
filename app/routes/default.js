@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const error = `The URL isn't valid.`;
+const error = `The URL isn't valid`;
 const action = (req, res) => res.status(400).json({error});
 
 router.get('*', action)
