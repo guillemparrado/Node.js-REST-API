@@ -30,7 +30,6 @@ router.get('/', jsonParser, async (req, res) => {
         for (const player of players) {
 
             // RAONAMENT IMPLEMENTACIÓ: UN JUGADOR REGISTRAT I SENSE TIRADES NO TÉ PERCENTATGE D'ÈXIT DEL 0% SINÓ NUL! Dit d'altra manera, en cas que un jugador tingui dues tirades amb èxit i un altre encara no hagi jugat, la mitjana d'èxit és del 100% perquè només hi ha un jugador sobre el que fer la mitjana.
-            console.log(player);
             if (player.winsPercent) {
                 sum += Number(player.winsPercent);
                 count += 1;
