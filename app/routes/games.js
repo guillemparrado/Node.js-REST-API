@@ -8,95 +8,100 @@ const Game = require('../models/Game')
 
 const { Op } = require('sequelize')
 
-const { sendError } = require('./utils')
+const { sendError500 } = require('./utils')
 
 /* 
-UN JUGADOR ESPECÍFIC REALITZA UNA TIRADA
-Tinc dubtes en aquesta part, sembla que el disseny òptim seria un get i que fos el back en node qui realitzés la tirada. Entenc que tal com està és pq no hi hagi method URIs i que només sigui una API d'iteracció amb una BBDD. Assumeixo que és així: obligo a rebre tirada de daus vàlida i passo la responsabilitat de la tirada al caller de l'api.
-*/
+ UN JUGADOR ESPECÍFIC REALITZA UNA TIRADA
+ Tinc dubtes en aquesta part, sembla que el disseny òptim seria un get i que fos el back en node qui realitzés la tirada. Entenc que tal com està és pq no hi hagi method URIs i que només sigui una API d'iteracció amb una BBDD. Assumeixo que és així: obligo a rebre tirada de daus vàlida i passo la responsabilitat de la tirada al caller de l'api.
 
-router.post('/:id/games', jsonParser, (req, res) => {
-    
-    // Valida Request
-    if(!('dice1' in req.body) || 
-    !('dice2' in req.body)){
-        res.status(400)
-        res.send({error: 'Needed fields in the JSON body: dice1, dice2.'})
-        return
-    }
+ UPDATE: és el servidor qui ha de tirar els daus, canvio el codi pq ho faci
+ */
 
-    if(!validDiceResult(req.body.dice1) || !validDiceResult(req.body.dice2)){
-        res.status(400)
-        res.send({error: 'Dice values need to be valid integers between 1 and 6'})
-        return
-    }
+const throwDice = () => Math.floor(Math.random() * 6) + 1;
 
-    // Valida que player existeix
-    Player.findOne({where: {id: req.params.id} })
-    .then(player => {
-        if(player === null){
+router.post('/:id', jsonParser, async (req, res) => {
+
+    // Llença daus
+    const dice1 = throwDice();
+    const dice2 = throwDice();
+
+    try {
+        // Valida que player existeix
+        const player = await Player.findOne({ where: { id: req.params.id } })
+        if (player === null) {
             res.status(400)
-            res.send({error: `Player with id ${req.params.id} doesn't exist`})
+            res.send({ error: `Player with id ${req.params.id} doesn't exist` })
             return
         }
-        // Crea i desa tirada
-        Game.create({
-            playerId: req.params.id,
-            dice1: req.body.dice1,
-            dice2: req.body.dice2,
-            won: req.body.dice1 + req.body.dice2 === 7
-        }).then(game => {
-            actualitzaWinsPercentPlayer(req.params.id)
-            res.send(game)
-        }).catch(error => sendError(res, error))
-    }).catch(error => sendError(res, error))
-})
+        console.log(player);
 
-function actualitzaWinsPercentPlayer(id) {
-    Game.count({
-        where: {
-          playerId: id
-        }
-    }).then(count => {
-        Game.count({
+        // Crea i desa tirada
+        const game = await Game.create({
+            playerId: req.params.id,
+            dice1,
+            dice2,
+            won: dice1 + dice2 === 7
+        })
+        console.log(game)
+
+        // Actualitza cache usuari
+        const count = await Game.count({
+            where:{ playerId: req.params.id },
+        })
+        console.log(count)
+
+        const won = await Game.count({
             where: {
                 [Op.and]: [
-                    {playerId: id},
-                    {won: true}
+                    { playerId: req.params.id },
+                    { won: true }
                 ]
             }
-        }).then(won => {
-            winsPercent = (won/count*100).toFixed(2) // 2 decimals
-            Player.update({winsPercent}, {
-                where: {id}
-            }).catch(error => sendError(res, error))
-        }).catch(error => sendError(res, error))
-    }).catch(error => sendError(res, error))
-}
+        })
+        console.log(won)
 
-/*
-ELIMINA LES TIRADES DEL JUGADOR
-Faig el request idempodent: ni faig check ni retorno error quan player no existeixi 
-*/
-router.delete('/:id/games', jsonParser, (req, res) => {
-    Game.destroy({
-        where: {playerId: req.params.id}
-      }).then(result => {
-          res.sendStatus(200)
-      }).catch(error => sendError(res, error))
+        // Resolt bug divisió per zero
+        const winsPercent = count === 0 ?
+            0 :
+            (won / count * 100).toFixed(2) // 2 decimals
+
+        console.log(winsPercent);
+
+        await Player.update({ winsPercent }, {
+            where: { id: req.params.id }
+        })
+
+        res.send(game)
+
+    } catch (e) {
+        sendError500(res, e);
+    }
 })
 
 /*
-RETORNA EL LLISTAT DE JUGADES PER UN JUGADOR
-*/
-router.get('/:id/games', jsonParser, (req, res) => {
+ ELIMINA LES TIRADES DEL JUGADOR
+ Faig el request idempodent: ni faig check ni retorno error quan player no existeixi
+ */
+router.delete('/:id', jsonParser, (req, res) => {
+    Game.destroy({
+        where: { playerId: req.params.id }
+    }).then(() => actualitzaWinsPercentPlayer(req.params.id))
+        .then(result => {
+            res.status(200)
+            res.send({ message: `Tirades del jugador ${req.params.id} eliminades correctament.` })
+        })
+        .catch(error => sendError(res, error))
+})
+
+/*
+ RETORNA EL LLISTAT DE JUGADES PER UN JUGADOR
+ */
+router.get('/:id', jsonParser, (req, res) => {
     Game.findAll({
-        where: {playerId: req.params.id}
+        where: { playerId: req.params.id }
     }).then(games => {
         res.send(games)
     }).catch(error => sendError(res, error))
 })
-
-const validDiceResult = value => Number.isInteger(value) && value >=1 && value <=6
 
 module.exports = router

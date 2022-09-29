@@ -28,7 +28,7 @@ router.post('/', jsonParser, (req, res) => {
     Player.findOne({where: {name: req.body.name} })
     .then(player => {
         //Bad request si name existeix (excepte si és anònim)
-        if(req.body.name != 'ANÒNIM' && player !== null) {
+        if(req.body.name !== 'ANÒNIM' && player !== null) {
             res.status(400)
             res.send({error: 'Player name already exists!'})
             return
@@ -77,7 +77,10 @@ router.put('/', jsonParser, (req, res) => {
             {name: req.body.newname},
             {where: {id: req.body.id}}
         ).then(result => {
-            res.sendStatus(200)
+            res.status(200)
+            res.send({
+                message: `Player ${req.body.id} name updated correctly to: ${req.body.newname}.`
+            })
         }).catch(error => sendError(res, error))
     })
     .catch(error => sendError(res, error))
@@ -94,7 +97,7 @@ router.get('/', (req, res) => {
 const isEmptyString = str => str === undefined || str === null || str.trim() === ''
 const isValidId = value => {
     intValue = parseInt(value)
-    return typeof intValue == 'number' && intValue != 0
+    return typeof intValue == 'number' && intValue !== 0
 }
 
 module.exports = router;

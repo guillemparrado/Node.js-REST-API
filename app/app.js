@@ -11,7 +11,7 @@ require('./models/utils/createDatabaseIfItDoesntExist').then(() => {
 
     app.use('/players', playersRoutes)
     app.use('/games', gamesRoutes)
-    app.use('/players/ranking', rankingRoutes)
+    app.use('/ranking', rankingRoutes)
     app.use('/', defaultRoutes)
 
     const server = app.listen(80, () => {
