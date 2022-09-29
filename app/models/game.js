@@ -1,8 +1,7 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('./utils/mysqlConnection')
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../db/db.js');
 
-class Game extends Model {}
-Game.init({
+module.exports = sequelize.define("game", {
   dice1: {
     type: DataTypes.TINYINT,
     allowNull: false
@@ -15,9 +14,6 @@ Game.init({
     type: DataTypes.BOOLEAN,
     allowNull: false
   },
-}, { 
-  sequelize, 
+}, {
   timestamps: false,
-  modelName: 'game' });
-
-module.exports = Game
+  });

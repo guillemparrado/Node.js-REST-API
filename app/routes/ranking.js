@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
-const { Op } = require('sequelize');
 
-const Player = require('../models/Player');
-const Game = require('../models/Game')
+const { Op } = require('sequelize');
+const {
+    Player,
+    Game
+} = require('../db/db')
 
 const { sendError } = require('./utils')
 

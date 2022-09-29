@@ -3,7 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
 
-const Player = require('../models/Player');
+const { Player } = require('../db/db');
 
 const { sendError } = require('./utils')
 

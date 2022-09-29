@@ -1,26 +1,20 @@
+require("dotenv").config();
 const express = require('express');
-playersRoutes = require('./routes/players')
-gamesRoutes = require('./routes/games')
-rankingRoutes = require('./routes/ranking')
-defaultRoutes = require('./routes/default')
-require('./models/utils/wireSequelize')
 
-const app = express();
+(async () => {
+    await require('./db/method/map_models');
+    const app = express();
 
-require('./models/utils/createDatabaseIfItDoesntExist').then(() => {
+    // És important importar les rutes quan el model ja estigui mapat per tenir disponibles els repositoris d'entitat (game, player, etc.). Per això faig require inline i no a principi del file.
+    app.use('/players', require('./routes/players'))
+    app.use('/games', require('./routes/games'))
+    app.use('/ranking', require('./routes/ranking'))
+    app.use('/', require('./routes/default'))
 
-    app.use('/players', playersRoutes)
-    app.use('/games', gamesRoutes)
-    app.use('/ranking', rankingRoutes)
-    app.use('/', defaultRoutes)
-
-    const server = app.listen(80, () => {
+    const server = app.listen(process.env.APP_PORT, () => {
         let host = server.address().address
-        let port = server.address().port
-
         host = host !== '::' ? host : 'localhost'
-
-        console.log(`Express server listening on: http://${host}:${port}`)
+        console.log(`Express server listening on: http://${host}:${process.env.APP_PORT}`)
     })
-})
+})()
 

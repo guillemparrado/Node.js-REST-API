@@ -1,10 +1,7 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('./utils/mysqlConnection')
-const Game = require('./Game')
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../db/db.js');
 
-class Player extends Model {}
-
-Player.init({
+module.exports = sequelize.define("player", {
   name: {
     type: DataTypes.STRING,
     allowNull: false
@@ -15,10 +12,7 @@ Player.init({
     allowNull: true
   }
   // Sequelize afegeix per defecte 'createdAt', no cal incloure'l a la descripció
-}, { 
-  sequelize, 
+}, {
   // Trec updatedAt, que també ve per defecte i no interessa
   updatedAt: false,
-  modelName: 'player' });
-
-module.exports = Player
+  });

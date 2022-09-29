@@ -3,10 +3,11 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 const jsonParser = bodyParser.json()
 
-const Player = require('../models/Player');
-const Game = require('../models/Game')
-
 const { Op } = require('sequelize')
+const {
+    Player,
+    Game
+} = require('../db/db')
 
 const { sendError500 } = require('./utils')
 
@@ -46,7 +47,7 @@ router.post('/:id', jsonParser, async (req, res) => {
 
         // Actualitza cache usuari
         const count = await Game.count({
-            where:{ playerId: req.params.id },
+            where: { playerId: req.params.id },
         })
         console.log(count)
 
