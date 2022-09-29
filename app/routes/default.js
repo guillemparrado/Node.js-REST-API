@@ -1,13 +1,12 @@
 const express = require('express');
-const { sendError400 } = require("./utils");
 const router = express.Router();
 
-router.get('*', (req, res) => sendError400(res))
+const error = `The URL isn't valid.`;
+const action = (req, res) => res.status(400).json({error});
 
-router.post('*', (req, res) => sendError400(res))
-
-router.delete('*', (req, res) => sendError400(res))
-
-router.put('*', (req, res) => sendError400(res))
+router.get('*', action)
+router.post('*', action)
+router.delete('*', action)
+router.put('*', action)
 
 module.exports = router;
