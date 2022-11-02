@@ -38,7 +38,8 @@ module.exports = new Promise(async (resolve, reject) => {
                     min: config.pool.min,
                     acquire: config.pool.acquire,
                     idle: config.pool.idle
-                }
+                },
+                logging: config.logging
             }
         )
 

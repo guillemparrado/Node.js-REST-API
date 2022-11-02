@@ -82,7 +82,7 @@ router.put('/', jsonParser, async (req, res) => {
 
 router.get('/', async (req, res) => {
     let players = await Player.findAll();
-    res.send(players);
+    res.status(200).json({players});
 
 })
 

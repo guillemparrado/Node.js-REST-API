@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+
 module.exports ={
     "database":{
         "host": process.env.MYSQL_HOST,
@@ -13,5 +14,7 @@ module.exports ={
         "min": 0,
         "acquire": 30000,
         "idle": 10000
-    }
+    },
+    // Només fes logging de sequelize quan no estiguem en producció
+    logging: (process.env.IS_PRODUCTION).toUpperCase() !== "TRUE"
 };
