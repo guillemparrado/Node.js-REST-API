@@ -28,7 +28,7 @@ router.post('/', [jsonParser, addNoCacheHeader, cors], (req, res) => {
     
     // Si no sha rebut nom d'usuari, retorna error
     if(req.body.username == undefined){
-        res.status(400)
+        res.status(401)
         res.send({
             error: 'Missing: A JSON with a valid username'
         })
